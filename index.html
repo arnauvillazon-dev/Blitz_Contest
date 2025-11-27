@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blitz Contest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <!-- Main Menu -->
+        <div id="main-menu" class="overlay">
+            <h1 class="neon-title">Blitz Contest</h1>
+            <div class="menu-buttons">
+                <button id="btn-user-game" class="neon-btn">USER GAME</button>
+                <button id="btn-agents-game" class="neon-btn">AGENTS GAME</button>
+                <button id="btn-rules" class="neon-btn">ℹ️</button>
+            </div>
+        </div>
+
+        <!-- Rules Overlay -->
+        <div id="rules-overlay" class="overlay hidden" style="z-index: 2000; background: rgba(10, 10, 18, 0.98);">
+            <div id="rules-content"
+                style="max-width: 800px; max-height: 80%; overflow-y: auto; padding: 2rem; text-align: left;">
+                <h1 class="neon-title" style="font-size: 3rem; margin-bottom: 2rem;">GAME RULES</h1>
+
+                <h2 style="color: var(--p1-color); margin-top: 1.5rem;">1. BOARD & LAYOUT</h2>
+                <p>• 8×8 grid (64 squares). Corners are invalid (voids).</p>
+                <p>• Checker-board pattern: dark (#1a1a2e) and light (#0a0a12).</p>
+
+                <h2 style="color: var(--p2-color); margin-top: 1.5rem;">2. PLAYERS & COLORS</h2>
+                <p>• P1 (Blue), P2 (Red), P3 (Green), P4 (Yellow).</p>
+                <p>• "User Game": P1 is human. "Agents Game": All bots.</p>
+                <p>• Start: 2 Rooks, 2 Bishops, 2 Queens, Neutral Pawns in center.</p>
+
+                <h2 style="color: var(--p3-color); margin-top: 1.5rem;">3. PIECE MOVEMENT</h2>
+                <p>• <strong>Rook:</strong> Horizontal/Vertical.</p>
+                <p>• <strong>Bishop:</strong> Diagonal.</p>
+                <p>• <strong>Queen:</strong> Rook + Bishop.</p>
+                <p>• <strong>Pawns:</strong> Static obstacles.</p>
+
+                <h2 style="color: var(--p4-color); margin-top: 1.5rem;">4. TURN PHASES</h2>
+                <p>1. <strong>SLOT MACHINE:</strong> 2 players & 1 piece type chosen.</p>
+                <p>2. <strong>COUNTDOWN:</strong> 5-second timer. Human input allowed.</p>
+                <p>3. <strong>RESOLUTION:</strong> Moves executed simultaneously.</p>
+
+                <h2 style="color: var(--p1-color); margin-top: 1.5rem;">5. SIMULTANEOUS RESOLUTION</h2>
+                <p>• <strong>Collision:</strong> Moving to same square -> Both destroyed.</p>
+                <p>• <strong>Duel:</strong> Swapping positions -> Both destroyed.</p>
+                <p>• <strong>Capture:</strong> Land on stationary piece -> Destroyed.</p>
+
+                <h2 style="color: var(--p2-color); margin-top: 1.5rem;">6. WIN CONDITION</h2>
+                <p>• Eliminated if you have <strong>ZERO Queens</strong>.</p>
+                <p>• Last player/team with a Queen wins.</p>
+                <p>• If all lose Queens simultaneously -> DRAW.</p>
+            </div>
+            <button id="btn-rules-back" class="neon-btn" style="margin-top: 2rem;">BACK</button>
+        </div>
+
+        <!-- Mute Button -->
+        <button id="btn-mute" class="mute-btn">🔊</button>
+
+        <!-- In-Game HUD -->
+        <div id="hud" class="hidden">
+            <div id="countdown-overlay" class="hidden">
+                <div id="countdown-text">5</div>
+            </div>
+        </div>
+
+        <!-- Slot Machine Overlay -->
+        <div id="slot-overlay" class="hidden">
+            <div id="slot-container">
+                <div class="slot-window" id="slot-p1">P1</div>
+                <div class="slot-vs">VS</div>
+                <div class="slot-window" id="slot-p2">P2</div>
+                <div class="slot-separator">|</div>
+                <div class="slot-window" id="slot-piece-type">ROOK</div>
+            </div>
+            <div id="game-over-message" class="hidden"></div>
+            <div id="game-over-buttons" style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+                <button id="btn-play-again" class="neon-btn hidden" style="font-size: 2rem;">PLAY AGAIN</button>
+                <button id="btn-return-menu" class="neon-btn hidden" style="font-size: 2rem;">MAIN MENU</button>
+            </div>
+        </div>
+
+        <!-- Game Canvas -->
+        <canvas id="game-canvas" width="800" height="800"></canvas>
+
+        <!-- Game Over Screen (Legacy) -->
+        <div id="game-over" class="overlay hidden">
+            <h1 id="winner-text" class="neon-title">PLAYER 1 WINS!</h1>
+            <button id="btn-restart" class="neon-btn">MAIN MENU</button>
+        </div>
+    </div>
+
+    <!-- Side Panel (HUD + Log) -->
+    <div id="side-panel">
+        <div id="slot-machine" class="hidden">
+            <div class="hud-badge">
+                <span class="label">ACTIVE PLAYERS</span>
+                <div id="slot-players" class="slot-display">-- VS --</div>
+            </div>
+            <div class="hud-badge">
+                <span class="label">PIECE TYPE</span>
+                <div id="slot-piece" class="slot-display">--</div>
+            </div>
+        </div>
+
+        <!-- Battle Log -->
+        <div id="game-log" class="hidden">
+            <!-- Log entries will go here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
